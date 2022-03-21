@@ -1,5 +1,8 @@
 package ir.mosi.persepolis.exception;
 
+import ir.mosi.persepolis.controller.ProductController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +18,13 @@ import java.util.List;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+    Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<?> resourceNotFoundException(ProductNotFoundException ex, WebRequest request) {
         ErrorDetails errorDetails =
                 new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
+        logger.info(ex.getMessage());
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 
