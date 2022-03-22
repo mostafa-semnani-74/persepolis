@@ -1,5 +1,6 @@
 package ir.mosi.persepolis.controller;
 
+import io.swagger.annotations.Api;
 import ir.mosi.persepolis.exception.ProductNotFoundException;
 import ir.mosi.persepolis.model.entity.Product;
 import ir.mosi.persepolis.model.service.ProductService;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/rest/api/product")
 @RequiredArgsConstructor
+@Api(value = "ProductRestController")
 public class ProductController {
     Logger logger = LoggerFactory.getLogger(ProductController.class);
     private final ProductService productService;
