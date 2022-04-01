@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
-    Logger logger = LoggerFactory.getLogger(ProductController.class);
+    private Logger logger = LoggerFactory.getLogger(ProductController.class);
     private final ProductRepository productRepository;
     private final String prodNotFoundMsg = "Product not found with id : ";
 
