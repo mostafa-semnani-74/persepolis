@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +24,7 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN,ROLE_CUSTOMER')")
     public List<Product> findAll() {
         List<Product> productList = productService.findAll();
         logger.info("productlist with size " + productList.size() + " found succesfully");
@@ -30,6 +32,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN,ROLE_CUSTOMER')")
     public ResponseEntity<Product> findById(@PathVariable(value = "id") Long id) throws ProductNotFoundException {
         Product productFoundById = productService.findById(id);
         logger.info("Product with Id " + id + " found succesfully");
@@ -37,6 +40,7 @@ public class ProductController {
     }
 
     @PostMapping("/")
+    @PreAuthorize("hasAuthority('product:write')")
     public ResponseEntity<Product> create(@Valid @RequestBody Product product) {
         Product createdProduct = productService.create(product);
         logger.info("Product with id " + createdProduct.getId() + " and with name " + createdProduct.getName()
@@ -45,6 +49,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('product:write')")
     public ResponseEntity<Product> update(@PathVariable(value = "id") Long id, @Valid @RequestBody Product product)
             throws ProductNotFoundException {
         Product updatedProduct = productService.update(id, product);
@@ -54,6 +59,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('product:write')")
     public ResponseEntity<HttpStatus> delete(@PathVariable(value = "id") Long id) throws ProductNotFoundException {
         productService.delete(id);
         logger.info("Product with id " + id + " deleted succesfully");
