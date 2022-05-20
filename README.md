@@ -6,6 +6,7 @@ Seed data\
 Integration test\
 Swagger\
 Lombok\
-Client with RestTemplate
+Client with RestTemplate\
+Spring Security + JWT
 ## DB
 PostgreSql
